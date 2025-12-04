@@ -96,7 +96,7 @@ for epochs：
 TODO：看源码里log probs是怎么算的？
 
 ## Async
-异步Rollout是指把一个batch request分为单个的request丢进SGLang来得到回答，主要是因为一个batch中的各个request的工具调用同时进行的话大概率会拥堵，且难以用状态机协调管理。
+异步Rollout是指把一个batch request分为单个的request丢进SGLang来得到回答，主要是因为一个batch中的各个request的工具调用同时进行的话大概率会拥堵，且难以用状态机协调管理。且不同request的rollout的长度一般不一样，有的长有的短，如果采用同步的方式，先完成的request就要等很久。
 
 ## 数据流
 A：Parquet 文件 --> B：RLHFDataset --> C：DataLoader + collate_fn --> D：DataProto 原始数据 --> E：pop 提取生成数据 --> F：Rollout 生成 --> G：union 合并数据 --> H：奖励计算 --> I：优势计算 --> J：重新计算 log_probs --> K：计算参考 log_probs --> L：计算价值函数 --> M1：更新 critic --> M2：更新 actor --> N：返回训练指标
