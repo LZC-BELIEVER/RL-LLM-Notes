@@ -252,6 +252,13 @@ Parameter Sync首先将所有Trainer和Rollouter都Worker组合为一组，用NC
 
 从实验图表中可以看到，相比于同步方法Method-1，异步方法2，3，4在训练时间上有明显的加快（30%-40%）。而在验证准确率方面，四种方法差别不大，其中Method-3稍好一点。
 
+<div style="text-align: center;">
+  <img src="img/idle.png" alt="a1" width="500" />
+  <p>图 5: Idle Rate</p>
+</div>
+
+画出Trainer的GPU闲置率，可以看到同步方法Method-1的GPU闲置率最高，on-step-off-oplicy（Method-2）相比其减半，而Method-3,4的闲置率几乎为0，说明了异步方法对于GPU的利用更加高效。
+
 *关于Step的解释：可以看到Method-1的step为400，而其他Method为100。这是因为当trigger_parameter_sync_step=4时，系统将4个更新（即一次参数同步）算作一个step，但是为保证训练量相同（即总minitbatch更新数相同），所以这样设置*
 
 
